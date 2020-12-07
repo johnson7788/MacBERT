@@ -16,37 +16,39 @@ This repository contains the resources in our paper **"Revisiting Pre-trained Mo
 *Yiming Cui, Wanxiang Che, Ting Liu, Bing Qin, Shijin Wang, Guoping Hu*
 
 
-For resources other than MacBERT, please visit the following repositories:
+有关MacBERT以外的资源，请访问以下repository：
 - Chinese BERT-wwm series: https://github.com/ymcui/Chinese-BERT-wwm
 - Chinese ELECTRA: https://github.com/ymcui/Chinese-ELECTRA
 - Chinese XLNet: https://github.com/ymcui/Chinese-XLNet
 
-More resources by HFL: https://github.com/ymcui/HFL-Anthology
+HFL的更多资源 : https://github.com/ymcui/HFL-Anthology
 
 
 ## News
-**[Nov 3, 2020] Pre-trained MacBERT models are available through direct [Download](#Download) or [Quick Load](#Quick-Load). Use it as if you are using original BERT (except for it cannot perform the original MLM).**
+**[Nov 3, 2020] 预训练的MacBERT模型可通过直接下载  [Download](#Download) or [Quick Load](#Quick-Load). 就像使用原始BERT一样使用它  (除了它不能执行原始的MLM ).**
 
 [Sep 15, 2020] Our paper ["Revisiting Pre-Trained Models for Chinese Natural Language Processing"](https://arxiv.org/abs/2004.13922) is accepted to [Findings of EMNLP](https://2020.emnlp.org) as a long paper.
 
 
 ## Guide
-| Section | Description |
+| Section | 描述 |
 |-|-|
-| [Introduction](#Introduction) | Introduction to MacBERT |
-| [Download](#Download) | Download links for MacBERT |
-| [Quick Load](#Quick-Load) | Learn how to quickly load our models through [🤗Transformers](https://github.com/huggingface/transformers) |
-| [Results](#Results) | Results on several Chinese NLP datasets |
-| [FAQ](#FAQ) | Frequently Asked Questions |
+| [Introduction](#Introduction) | 介绍 MacBERT |
+| [Download](#Download) | 下载链接 MacBERT |
+| [Quick Load](#Quick-Load) | 使用transformers快速加载 [🤗Transformers](https://github.com/huggingface/transformers) |
+| [Results](#Results) | 在几个Chinese NLP datasets的结果 |
+| [FAQ](#FAQ) | 常见问题|
 | [Citation](#Citation) | Citation |
 
 
 ## Introduction
-**MacBERT** is an improved BERT with novel **M**LM **a**s **c**orrection pre-training task, which mitigates the discrepancy of pre-training and fine-tuning.
+MacBERT是经过改进的BERT，具有新颖的MLM作为校正预训练任务，从而减轻了预训练和微调的差异。 
 
-Instead of masking with [MASK] token, which never appears in the ﬁne-tuning stage, **we propose to use similar words for the masking purpose**. A similar word is obtained by using [Synonyms toolkit (Wang and Hu, 2017)](https://github.com/chatopera/Synonyms), which is based on word2vec (Mikolov et al., 2013) similarity calculations. If an N-gram is selected to mask, we will ﬁnd similar words individually. In rare cases, when there is no similar word, we will degrade to use random word replacement.
+我们提议不要使用[MASK]token进行masking，因为token不会出现在微调阶段，我们提议使用相似的单词进行masking。 
+通过使用基于word2vec(Mikolov et al.,2013)相似度计算的同义词工具包(Wang and Hu，2017)获得相似的单词。 
+如果选择一个N-gram进行masked，我们将分别找到相似的单词。 在极少数情况下，当没有相似的单词时，我们会降级以使用随机单词替换。 
 
-Here is an example of our pre-training task.
+这是我们训练前任务的一个样本。
 |  | Example       |
 | -------------- | ----------------- |
 | **Original Sentence**  | we use a language model to predict the probability of the next word. |
@@ -55,19 +57,19 @@ Here is an example of our pre-training task.
 | **N-gram masking** | we use a [M] [M] to [M] [M] [M] the [M] [M] [M] [M] [M] next word . |
 | **MLM as correction** | we use a text system to ca ##lc ##ulate the po ##si ##bility of the next word . |
 
-Except for the new pre-training task, we also incorporate the following techniques.
+除了新的预训练任务，我们还采用了以下技术。 
 
 - Whole Word Masking (WWM)
 - N-gram masking
 - Sentence-Order Prediction (SOP)
 
-**Note that our MacBERT can be directly replaced with the original BERT as there is no differences in the main neural architecture.**
+**请注意，我们的MacBERT可以直接用原始BERT替换，因为主要神经体系结构没有差异**
 
-For more technical details, please check our paper: [Revisiting Pre-trained Models for Chinese Natural Language Processing](https://arxiv.org/abs/2004.13922)
+有关更多技术细节，请检查我们的论文 : [Revisiting Pre-trained Models for Chinese Natural Language Processing](https://arxiv.org/abs/2004.13922)
 
 
 ## Download
-We mainly provide pre-trained MacBERT models in TensorFlow 1.x.
+我们在TensorFlow 1.x中提供经过预训练的MacBERT模型。 
 
 * **`MacBERT-large, Chinese`**: 24-layer, 1024-hidden, 16-heads, 324M parameters   
 * **`MacBERT-base, Chinese`**：12-layer, 768-hidden, 12-heads, 102M parameters   
@@ -79,24 +81,23 @@ We mainly provide pre-trained MacBERT models in TensorFlow 1.x.
 
 ### PyTorch/TensorFlow2 Version
 
-If you need these models in PyTorch/TensorFlow2,
+如果您需要在PyTorch / TensorFlow2中使用这些模型， 
 
-1) Convert TensorFlow checkpoint into PyTorch/TensorFlow2, using [🤗Transformers](https://github.com/huggingface/transformers)
+1) 将TensorFlowcheckpoint转换为PyTorch / TensorFlow2 , 使用这个工具 [🤗Transformers](https://github.com/huggingface/transformers)
 
-2) Download from https://huggingface.co/hfl
-
-Steps: select one of the model in the page above → click "list all files in model" at the end of the model page → download bin/json files from the pop-up window.
+2) 从https://huggingface.co/hfl下载 
+步骤：在上面的页面中选择一个模型→单击模型页面末尾的“列出模型中的所有文件”→从弹出窗口下载bin / json文件。 
 
 
 ## Quick Load
-With [Huggingface-Transformers](https://github.com/huggingface/transformers), the models above could be easily accessed and loaded through the following codes.
+With [Huggingface-Transformers](https://github.com/huggingface/transformers), 上面的模型可以通过以下代码轻松访问和加载。 
 ```
 tokenizer = BertTokenizer.from_pretrained("MODEL_NAME")
 model = BertModel.from_pretrained("MODEL_NAME")
 ```
-**Notice: Please use BertTokenizer and BertModel for loading MacBERT models.  **
+**注意力：请使用Bert Tokenizer和BertModel加载MacBERT模型。   **
 
-The actual model and its `MODEL_NAME` are listed below.
+实际模型及其“MODEL_NAME”在下面列出。 
 
 | Original Model | MODEL_NAME                |
 | -------------- | ------------------------- |
@@ -104,7 +105,7 @@ The actual model and its `MODEL_NAME` are listed below.
 | MacBERT-base   | hfl/chinese-macbert-base  |
 
 ## Results
-We present the results of MacBERT on the following six tasks (please read our paper for other results).
+我们介绍了MacBERT在以下六个任务上的结果(请阅读我们的论文以获取其他结果)。 
 - [**CMRC 2018 (Cui et al., 2019)**：Span-Extraction Machine Reading Comprehension (Simplified Chinese)](https://github.com/ymcui/cmrc2018)
 - [**DRCD (Shao et al., 2018)**：Span-Extraction Machine Reading Comprehension (Traditional Chinese)](https://github.com/DRCSolutionService/DRCD)
 - [**XNLI (Conneau et al., 2018)**：Natural Langauge Inference](https://github.com/google-research/bert/blob/master/multilingual.md)
@@ -112,10 +113,10 @@ We present the results of MacBERT on the following six tasks (please read our pa
 - [**LCQMC (Liu et al., 2018)**：Sentence Pair Matching](http://icrc.hitsz.edu.cn/info/1037/1146.htm)
 - [**BQ Corpus (Chen et al., 2018)**：Sentence Pair Matching](http://icrc.hitsz.edu.cn/Article/show/175.html)
 
-To ensure the stability of the results, we run 10 times for each experiment and report the maximum and average scores (in brackets).
+为了确保结果的稳定性，我们为每个实验运行10次，并报告最高和平均分数(在方括号中)。
 
 ### CMRC 2018
-[CMRC 2018 dataset](https://github.com/ymcui/cmrc2018) is released by the Joint Laboratory of HIT and iFLYTEK Research. The model should answer the questions based on the given passage, which is identical to [SQuAD](http://arxiv.org/abs/1606.05250). Evaluation metrics: EM / F1
+[CMRC 2018 dataset](https://github.com/ymcui/cmrc2018) 由HIT和iFLYTEK Research联合实验室发布。 模型应根据给定的段落回答问题 , which is identical to [SQuAD](http://arxiv.org/abs/1606.05250). Evaluation metrics: EM / F1
 
 | Model                     |        Development        |           Test            |         Challenge         | #Params |
 | :------------------------ | :-----------------------: | :-----------------------: | :-----------------------: | :-----: |
@@ -131,7 +132,7 @@ To ensure the stability of the results, we run 10 times for each experiment and 
 
 
 ### DRCD
-[DRCD](https://github.com/DRCKnowledgeTeam/DRCD) is also a span-extraction machine reading comprehension dataset, released by Delta Research Center. The text is written in Traditional Chinese. Evaluation metrics: EM / F1
+[DRCD](https://github.com/DRCKnowledgeTeam/DRCD) 也是Delta研究中心发布的跨度提取机器阅读理解数据集。 繁体中文写成. Evaluation metrics: EM / F1
 
 | Model                     |        Development        |           Test            | #Params |
 | :------------------------ | :-----------------------: | :-----------------------: | :-----: |
@@ -163,7 +164,7 @@ We use [XNLI](https://github.com/google-research/bert/blob/master/multilingual.m
 
 
 ### ChnSentiCorp
-We use [ChnSentiCorp](https://github.com/pengming617/bert_classification) data for testing sentiment analysis. Evaluation metrics: Accuracy
+We use [ChnSentiCorp](https://github.com/pengming617/bert_classification) 数据测试情感分析. Evaluation metrics: Accuracy
 
 | Model                     | Development |    Test     | #Params |
 | :------------------------ | :---------: | :---------: | :-----: |
@@ -179,7 +180,7 @@ We use [ChnSentiCorp](https://github.com/pengming617/bert_classification) data f
 
 
 ### LCQMC
-[**LCQMC**](http://icrc.hitsz.edu.cn/info/1037/1146.htm) is a sentence pair matching dataset, which could be seen as a binary classification task. Evaluation metrics: Accuracy
+[**LCQMC**](http://icrc.hitsz.edu.cn/info/1037/1146.htm) 是一个句子对匹配数据集，可以看作是二分类任务. Evaluation metrics: Accuracy
 
 | Model                     | Development |    Test     | #Params |
 | :------------------------ | :---------: | :---------: | :-----: |
@@ -194,7 +195,7 @@ We use [ChnSentiCorp](https://github.com/pengming617/bert_classification) data f
 | **MacBERT-large** | 90.6 (90.3) | 87.6 (87.1) | 324M |
 
 ### BQ Corpus 
-[**BQ Corpus**](http://icrc.hitsz.edu.cn/Article/show/175.html) is a sentence pair matching dataset, which could be seen as a binary classification task. Evaluation metrics: Accuracy
+[**BQ Corpus**](http://icrc.hitsz.edu.cn/Article/show/175.html) 是一个句子对匹配数据集，可以看作是二分类任务 . Evaluation metrics: Accuracy
 
 | Model                     | Development |    Test     | #Params |
 | :------------------------ | :---------: | :---------: | :-----: |
@@ -209,21 +210,21 @@ We use [ChnSentiCorp](https://github.com/pengming617/bert_classification) data f
 | **MacBERT-large** | 86.2 (85.7) | 85.6 (85.0) | 324M |
 
 ## FAQ
-**Question 1: Do you have an English version of MacBERT?**
+**Question 1: 你有英文版的MacBERT吗 ?**
 
-A1: Sorry, we do not have English version of pre-trained MacBERT. 
+A1: 抱歉，我们没有英语版本的预训练的MacBERT。 
 
 **Question 2: How to use MacBERT?**
 
 A2: Use it as if you are using original BERT in the fine-tuning stage (just replace the checkpoint and config files). Also, you can perform further pre-training on our checkpoint with MLM/NSP/SOP objectives. 
 
-**Question 3: Could you provide pre-training code for MacBERT?**
+**Question 3: 您能提供MacBERT的预训练代码吗 ?**
 
-A3: Sorry, we cannot provide source code at the moment, and maybe we'll release them in the future, but there is no guarantee.
+A3: 抱歉，我们目前无法提供源代码，也许我们会在将来发布它们，但不能保证。 
 
-**Question 4: How about releasing the pre-training data?**
+**Question 4: 如何发布预训练数据 ?**
 
-A4: We have no right to redistribute these data, which will have potential legal violations.
+A4: 我们无权重新分发这些数据，因为这些数据可能会违反法律。 
 
 **Question 5: Will you release pre-trained MacBERT on a larger data?**
 
